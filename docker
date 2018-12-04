@@ -441,8 +441,6 @@ detectLsbDist() {
                 _error_msg="$_error_msg\nHowever detected version $_version is less than 1235."
                 oIFS="$IFS"; IFS=.; set -- $_version; IFS="$oIFS";
                 [ $1 -ge 1235 ] && LSB_DIST=$_dist && DIST_VERSION=$_version && DIST_VERSION_MAJOR=$1
-                echo "v = $DIST_VERSION_MAJOR"
-                exit 1
                 ;;
             *)
                 _error_msg="$_error_msg\nThat is an unsupported distribution."
@@ -2635,8 +2633,8 @@ EnvironmentFile=${CONFDIR}/replicated
 User=${REPLICATED_USER_ID}
 Group=${DOCKER_GROUP_ID}
 ExecStartPre=-/usr/bin/docker rm -f replicated
-ExecStartPre=/bin/mkdir -p /var/run/replicated /var/lib/replicated /var/lib/replicated/statsd 
-ExecStartPre=/bin/chown -R ${REPLICATED_USER_ID}:${DOCKER_GROUP_ID} /var/run/replicated /var/lib/replicated 
+ExecStartPre=/bin/mkdir -p /var/run/replicated /var/lib/replicated /var/lib/replicated/statsd
+ExecStartPre=/bin/chown -R ${REPLICATED_USER_ID}:${DOCKER_GROUP_ID} /var/run/replicated /var/lib/replicated
 ExecStartPre=-/bin/chmod -R 755 /var/lib/replicated/tmp
 ExecStart=/usr/bin/docker run --name=replicated \\
     -p 9874-9879:9874-9879/tcp \\
@@ -2714,8 +2712,8 @@ respawn
 respawn limit 5 30
 normal exit 0
 pre-start script
-    /bin/mkdir -p /var/run/replicated /var/lib/replicated /var/lib/replicated/statsd 
-    /bin/chown -R ${REPLICATED_USER_ID}:${DOCKER_GROUP_ID} /var/run/replicated /var/lib/replicated 
+    /bin/mkdir -p /var/run/replicated /var/lib/replicated /var/lib/replicated/statsd
+    /bin/chown -R ${REPLICATED_USER_ID}:${DOCKER_GROUP_ID} /var/run/replicated /var/lib/replicated
     /bin/chmod -R 755 /var/lib/replicated/tmp 2>/dev/null || true
     /usr/bin/docker rm -f replicated 2>/dev/null || true
     COUNTER=0
@@ -2828,8 +2826,8 @@ if [ ! -x \${DOCKER} ]; then
 fi
 
 run_container() {
-    /bin/mkdir -p /var/run/replicated /var/lib/replicated /var/lib/replicated/statsd 
-    /bin/chown -R ${REPLICATED_USER_ID}:${DOCKER_GROUP_ID} /var/run/replicated /var/lib/replicated 
+    /bin/mkdir -p /var/run/replicated /var/lib/replicated /var/lib/replicated/statsd
+    /bin/chown -R ${REPLICATED_USER_ID}:${DOCKER_GROUP_ID} /var/run/replicated /var/lib/replicated
     /bin/chmod -R 755 /var/lib/replicated/tmp 2>/dev/null || true
     /usr/bin/docker rm -f replicated 2>/dev/null || true
     exec su -s /bin/sh -c 'exec "\$0" "\$@"' ${REPLICATED_USERNAME} -- \${DOCKER} run -d --name=\${REPLICATED} \\
