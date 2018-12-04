@@ -1,0 +1,12 @@
+[Unit]
+Description=Mount /opt/usrlocal to /usr/local to make it rw
+Before=local-fs.target
+
+[Mount]
+What=/opt/usrlocal
+Where=/usr/local
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target
