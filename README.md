@@ -6,4 +6,11 @@ This is an attempt to adopt [official manual](https://help.replicated.com/docs/n
 
 1. Make `/usr/local` writable
 
+
+## Running installer
+
+```
+sh docker no_proxy docker-version=18.06.1-ce
+```
+
 ## Script changes
