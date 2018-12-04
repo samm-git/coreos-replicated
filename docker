@@ -437,6 +437,13 @@ detectLsbDist() {
                 oIFS="$IFS"; IFS=.; set -- $_version; IFS="$oIFS";
                 [ $1 -ge 6 ] && LSB_DIST=$_dist && DIST_VERSION=$_version && DIST_VERSION_MAJOR=$1
                 ;;
+            coreos)
+                _error_msg="$_error_msg\nHowever detected version $_version is less than 1235."
+                oIFS="$IFS"; IFS=.; set -- $_version; IFS="$oIFS";
+                [ $1 -ge 1235 ] && LSB_DIST=$_dist && DIST_VERSION=$_version && DIST_VERSION_MAJOR=$1
+                echo "v = $DIST_VERSION_MAJOR"
+                exit 1
+                ;;
             *)
                 _error_msg="$_error_msg\nThat is an unsupported distribution."
                 ;;
