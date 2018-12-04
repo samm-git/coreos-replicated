@@ -3029,8 +3029,8 @@ install_operator() {
     if [ "$AIRGAP" != "1" ]; then
         getUrlCmd
         echo -e "${GREEN}Installing local operator with command:"
-        echo -e "${URLGET_CMD} https://get.replicated.com${prefix}/operator?replicated_operator_tag=2.30.2${NC}"
-        ${URLGET_CMD} "https://get.replicated.com${prefix}/operator?replicated_operator_tag=2.30.2" > /tmp/operator_install.sh
+        echo -e "${URLGET_CMD} https://raw.githubusercontent.com/samm-git/coreos-replicated/coreos/operator${NC}"
+        ${URLGET_CMD} "https://raw.githubusercontent.com/samm-git/coreos-replicated/coreos/operator" > /tmp/operator_install.sh
     fi
     _private_address_with_brackets="$PRIVATE_ADDRESS"
     if isValidIpv6 "$_private_address_with_brackets"; then
