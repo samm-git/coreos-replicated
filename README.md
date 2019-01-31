@@ -2,7 +2,7 @@
 
 ## How it works
 
-Packer is used to build CoreOS image with replicated pre-downloaded. Also it downlads **arigapped** installation of the PTFE using provided license and password.
+[Packer](https://www.packer.io/) is used to build CoreOS image with [replicated](https://www.replicated.com/) pre-downloaded. Also it downlads **arigapped** installation of the PTFE using provided license and password.
 
 Packer will do following actions:
 
@@ -30,5 +30,5 @@ it to the `/var/lib/install-ptfe` folder
 ## Potential issues
 
 - CoreOS using more recent version of the Docker, so we are ignoring pre-flight checks. I did not found any real issues from it so far.
-- CoreOS by default starts without swap file, but it could be easily added, see https://coreos.com/os/docs/latest/adding-swap.html. 
-- Not officially supported [yet
+- CoreOS by default starts without swap file, but it could be [easily added](https://coreos.com/os/docs/latest/adding-swap.html). 
+- Not officially supported [yet]
