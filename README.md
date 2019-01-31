@@ -2,9 +2,9 @@
 
 ## How it works
 
-Packer is used to build CoreOS image with replicated pre-installed
+Packer is used to build CoreOS image with replicated pre-downloaded. Also it downlads **arigapped** installation of the PTFE using provided license and password.
 
-This script doing following actions:
+Packer will do following actions:
 
 1. Installing replicated systemd units (based on official one)
 1. Installing relpilcated CLI tools to the `/opt/bin`
@@ -15,8 +15,8 @@ it to the `/var/lib/install-ptfe` folder
 ## How to use
 
 1. Build packer image
-2. Create userdata script to create  valid `/etc/replicated.conf`
-(see `/etc/replicated.conf.sample`)
+2. Run AMI based on this image with userdata to create  valid `/etc/replicated.conf` and friends
+(see `/etc/replicated.conf.sample`). After first run AMI will start replicated and install airagapped package.
 
 ## Variables to set
 
