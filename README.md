@@ -26,3 +26,9 @@ it to the `/var/lib/install-ptfe` folder
 - `AWS_SECURITY_GROUP_ID` - Security Group ID
 - `PTFE_REPLICATED_PWD` - password to get Airgap replicated installations
 - `PTFE_LICENSE_ID` - PTFE license ID
+
+## Potential issues
+
+- CoreOS using more recent version of the Docker, so we are ignoring pre-flight checks. I did not found any real issues from it so far.
+- CoreOS by default starts without swap file, but it could be easily added, see https://coreos.com/os/docs/latest/adding-swap.html. 
+- Not officially supported [yet
