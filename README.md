@@ -1,4 +1,4 @@
-# Replicated on the CoreOS Linux
+# Replicated+PTFE on the CoreOS Linux
 
 ## How it works
 
