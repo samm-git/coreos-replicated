@@ -1,6 +1,7 @@
 #!/bin/bash
 
-## Script to get airgapped image of the replited for the specific release
+## Script to download airgapped image of the replited for the specific release
+#
 ## variables to set:
 ## REPLICATED_PWD - password for the airgapped releases
 ## LICENSE_ID - license_id
