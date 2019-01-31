@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## This script downloads latest stable airgap replicated package and adds it to the docker
+## All images are additionally tagged as :current
+
 set -e
 set -o pipefail
 
