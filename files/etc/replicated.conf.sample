@@ -1,0 +1,8 @@
+{
+  "DaemonAuthenticationType": "password",
+  "DaemonAuthenticationPassword": "mypassword",
+  "TlsBootstrapType": "self-signed",
+  "LicenseFileLocation": "/etc/replicated.rli",
+  "LicenseBootstrapAirgapPackagePath": "/var/lib/install-ptfe/archive.tgz",
+  "BypassPreflightChecks": true
+}

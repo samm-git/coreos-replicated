@@ -1,0 +1,31 @@
+[Unit]
+Description=Replicated Service
+After=docker.service
+Requires=docker.service
+ConditionFileNotEmpty=/etc/replicated.conf
+
+[Service]
+PermissionsStartOnly=true
+TimeoutStartSec=0
+KillMode=none
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/default/replicated-token
+EnvironmentFile=/etc/default/replicated
+User=1000
+Group=233
+ExecStartPre=-/usr/bin/docker rm -f replicated-ui
+ExecStartPre=/bin/mkdir -p /var/run/replicated
+ExecStartPre=/bin/chown -R 1000:233 /var/run/replicated
+ExecStart=/usr/bin/docker run --name=replicated-ui \
+    -p 8800:8800/tcp \
+    -u 1000:233 \
+    -v /var/run/replicated:/var/run/replicated \
+    --security-opt label=type:spc_t \
+    $REPLICATED_UI_OPTS \
+    quay.io/replicated/replicated-ui:current
+ExecStop=/usr/bin/docker stop replicated-ui
+Restart=on-failure
+RestartSec=7
+
+[Install]
+WantedBy=docker.service

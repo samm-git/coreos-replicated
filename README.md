@@ -1,5 +1,28 @@
-# Packer scenario to install replicated on the CoreOS stable
+# Replicated on the CoreOS Linux
 
-This is an attempt to adopt [official manual](https://help.replicated.com/docs/native/customer-installations/installing/) for the CoreOS platform. It is using packer to create an AMI.
+## How it works
 
+Packer is used to build CoreOS image with replicated pre-installed
 
+This script doing following actions:
+
+1. Installing replicated systemd units (based on official one)
+1. Installing relpilcated CLI tools to the `/opt/bin`
+1. Generating random token to be used with replicated
+1. Downloading Airgap package of the Terraform enterprise edition and putting
+it to the `/var/lib/install-ptfe` folder
+
+## How to use
+
+1. Build packer image
+2. Create userdata script to create  valid `/etc/replicated.conf`
+(see `/etc/replicated.conf.sample`)
+
+## Variables to set
+
+- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` - AWS permissions
+- `AWS_VPC_ID` - VPC ID
+- `AWS_SUBNET_ID` - subnet ID
+- `AWS_SECURITY_GROUP_ID` - Security Group ID
+- `PTFE_REPLICATED_PWD` - password to get Airgap replicated installations
+- `PTFE_LICENSE_ID` - PTFE license ID

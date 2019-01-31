@@ -1,0 +1,40 @@
+[Unit]
+Description=Replicated Operator Service
+After=docker.service
+Requires=docker.service
+ConditionFileNotEmpty=/etc/replicated.conf
+
+[Service]
+PermissionsStartOnly=true
+TimeoutStartSec=0
+KillMode=none
+EnvironmentFile=/etc/environment
+EnvironmentFile=/etc/default/replicated-token
+EnvironmentFile=/etc/default/replicated-operator
+User=1000
+Group=233
+ExecStartPre=-/usr/bin/docker rm -f replicated-operator
+ExecStartPre=/bin/mkdir -p /var/run/replicated-operator /var/lib/replicated-operator
+ExecStartPre=/bin/chown -R 1000:233 /var/run/replicated-operator /var/lib/replicated-operator
+ExecStart=/usr/bin/docker run --name=replicated-operator \
+    -u 1000:233 \
+    -v /var/lib/replicated-operator:/var/lib/replicated-operator \
+    -v /var/run/replicated-operator:/var/run/replicated-operator \
+    -v /var/run/docker.sock:/host/var/run/docker.sock \
+    -v /proc:/host/proc:ro \
+    -v /etc:/host/etc:ro \
+    -v /etc/os-release:/host/etc/os-release:ro \
+    --security-opt label=type:spc_t \
+    -e DAEMON_ENDPOINT=${COREOS_PRIVATE_IPV4}:9879 \
+    -e DAEMON_TOKEN=${DAEMON_TOKEN} \
+    -e NO_PROXY=${COREOS_PRIVATE_IPV4} \
+    -e PRIVATE_ADDRESS=${COREOS_PRIVATE_IPV4} \
+    -e PUBLIC_ADDRESS=${COREOS_PRIVATE_IPV4} \
+    $REPLICATED_OPERATOR_OPTS \
+    quay.io/replicated/replicated-operator:current
+ExecStop=/usr/bin/docker stop replicated-operator
+Restart=on-failure
+RestartSec=7
+
+[Install]
+WantedBy=docker.service

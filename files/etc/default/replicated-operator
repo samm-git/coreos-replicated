@@ -1,0 +1,2 @@
+RELEASE_CHANNEL=stable
+REPLICATED_OPERATOR_OPTS="-e TAGS=local -e LOG_LEVEL=info -e NODENAME=localhost"

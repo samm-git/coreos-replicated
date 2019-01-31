@@ -1,13 +1,16 @@
 {
   "variables": {
-    "source": "{{ env `AMI_SOURCE`}}",
+    "source": "ami-03b89dc7d999dd591",
     "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "aws_session_token": "{{env `AWS_SESSION_TOKEN`}}",
     "aws_vpc_id": "{{env `AWS_VPC_ID`}}",
     "aws_subnet_id": "{{env `AWS_SUBNET_ID`}}",
     "aws_security_group_id": "{{env `AWS_SECURITY_GROUP_ID`}}",
-    "aws_region": "us-east-1"
+    "aws_region": "us-east-1",
+    "ptfe_replicated_pwd": "{{env `PTFE_REPLICATED_PWD`}}",
+    "ptfe_license_id": "{{env `PTFE_LICENSE_ID`}}",
+    "ptfe_release_number": "314"
   },
   "builders": [
     {
@@ -29,15 +32,36 @@
       "ssh_username": "core",
       "tags": {
         "Source": "{{user `source`}}"
-      }
+      },
+      "launch_block_device_mappings": [
+        {
+          "device_name": "/dev/xvda",
+          "delete_on_termination": true,
+          "volume_size": 20,
+          "volume_type": "gp2"
+        }
+      ]
     }
   ],
   "provisioners": [
     {
+      "type": "file",
+      "source": "files",
+      "destination": "/tmp"
+    },
+    {
       "type": "shell",
+      "environment_vars": [
+        "REPLICATED_PWD={{user `ptfe_replicated_pwd`}}",
+        "RELEASE_NUMBER={{user `ptfe_release_number`}}",
+        "LICENSE_ID={{user `ptfe_license_id`}}"
+      ],
       "execute_command": "echo 'core' | {{ .Vars }} sudo -E -S /bin/bash '{{ .Path }}'",
       "scripts": [
-        "scripts/replicated.sh"
+        "scripts/init.sh",
+        "scripts/disable-coreos-autoupdate.sh",
+        "scripts/replicated.sh",
+        "scripts/terraform.sh"
       ]
     }
   ]
