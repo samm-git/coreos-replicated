@@ -10,7 +10,7 @@
     "aws_region": "us-east-1",
     "ptfe_replicated_pwd": "{{env `PTFE_REPLICATED_PWD`}}",
     "ptfe_license_id": "{{env `PTFE_LICENSE_ID`}}",
-    "ptfe_release_number": "314"
+    "ptfe_release_number": "327"
   },
   "builders": [
     {
