@@ -1,6 +1,6 @@
 {
   "variables": {
-    "source": "ami-03b89dc7d999dd591",
+    "coreos_version": "1967.6.0",
     "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "aws_session_token": "{{env `AWS_SESSION_TOKEN`}}",
@@ -17,7 +17,14 @@
       "type": "amazon-ebs",
       "ami_name": "CoreOS/replicated-{{timestamp}}",
       "ami_description": "CoreOS image for the Replicated installer",
-      "source_ami": "{{user `source`}}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "CoreOS-stable-{{user `coreos_version`}}-hvm"
+        },
+        "owners": ["595879546273"],
+        "most_recent": true
+      },
       "region": "{{user `aws_region`}}",
       "vpc_id": "{{user `aws_vpc_id`}}",
       "subnet_id": "{{user `aws_subnet_id`}}",
@@ -31,7 +38,7 @@
       "ssh_interface": "private_ip",
       "ssh_username": "core",
       "tags": {
-        "Source": "{{user `source`}}"
+        "Source": "{{user `coreos_version`}}"
       },
       "launch_block_device_mappings": [
         {
